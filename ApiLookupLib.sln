@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLookupLib_Tests", "ApiLookupLib_Tests\ApiLookupLib_Tests.csproj", "{185A1582-7B26-49B9-86AD-20D75877E8CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLookupLib", "ApiLookupLib\ApiLookupLib.csproj", "{3091DECA-8ECA-415B-A4D4-1055774C6F5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{185A1582-7B26-49B9-86AD-20D75877E8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185A1582-7B26-49B9-86AD-20D75877E8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185A1582-7B26-49B9-86AD-20D75877E8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185A1582-7B26-49B9-86AD-20D75877E8CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
