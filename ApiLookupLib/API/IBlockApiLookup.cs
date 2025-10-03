@@ -5,13 +5,13 @@ namespace ApiLookupLib.API;
 
 public interface IBlockApiLookup<TValue, TContext> : IApiLookupBase<TValue, TContext, BlockPos> {
     
-    delegate TValue? GetterBlockEntity<in TEntity>(TEntity be, TContext context) where TEntity : BlockEntity;
+    delegate TValue? GetterBlockEntity(BlockEntity be, TContext context);
 
     void RegisterForBlocks(Getter getter, params Block[] blocks);
 
     void RegisterForBlocks(Getter getter, AssetLocation wildcard);
 
-    void RegisterForBlocks<TEntity>(GetterBlockEntity<TEntity> getter, params Block[] blocks) where TEntity : BlockEntity;
+    void RegisterForBlocks(GetterBlockEntity getter, params Block[] blocks);
 
-    void RegisterForBlocks<TEntity>(GetterBlockEntity<TEntity> getter, AssetLocation wildcard) where TEntity : BlockEntity;
+    void RegisterForBlocks(GetterBlockEntity getter, AssetLocation wildcard);
 }
