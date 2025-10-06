@@ -33,7 +33,7 @@ public class SimpleBlockApiLookup<TValue, TContext>(IWorldAccessor worldIds) : S
             }
         }
 
-        return Get(world, pos, context);
+        return base.Get(world, pos, context);
     }
 
     public void RegisterForBlocks(IApiLookupBase<TValue, TContext, BlockPos>.Getter getter, params Block[] blocks) {

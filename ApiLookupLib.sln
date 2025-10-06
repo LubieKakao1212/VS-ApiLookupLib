@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureApi", "Temperatu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunGame", "RunGame\RunGame.csproj", "{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingMod", "TestingMod\TestingMod.csproj", "{6C5F6906-3B42-4515-A950-393943AE1FA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

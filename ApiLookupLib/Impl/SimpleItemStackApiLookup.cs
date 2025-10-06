@@ -18,7 +18,7 @@ public class SimpleItemStackApiLookup<TValue, TContext>(IWorldAccessor worldIds)
             }
         }
 
-        return Get(world, stack, context);
+        return base.Get(world, stack, context);
     }
     
     public void RegisterFor(IApiLookupBase<TValue, TContext, ItemStack>.Getter getter, params CollectibleObject[] collectibles) {
