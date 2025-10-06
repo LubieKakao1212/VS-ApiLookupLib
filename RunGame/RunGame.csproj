@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
+      <ProjectReference Include="..\TemperatureApi\TemperatureApi.csproj" />
     </ItemGroup>
     
 </Project>
