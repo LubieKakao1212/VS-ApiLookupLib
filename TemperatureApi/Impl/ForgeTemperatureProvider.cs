@@ -8,6 +8,6 @@ public class ForgeTemperatureProvider(BlockEntityForge be) : ITemperatureProvide
     public void Dispose() { }
 
     public float GetTemperature() {
-        return be.Lit ? 1100f : 0f;
+        return be.Lit ? 1100f : 20f;
     }
 }

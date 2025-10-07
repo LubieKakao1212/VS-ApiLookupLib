@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ApiLookupLibSystems\ApiLookupLibSystems.csproj" />
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
       <ProjectReference Include="..\TemperatureApi\TemperatureApi.csproj" />
       <ProjectReference Include="..\TestingMod\TestingMod.csproj" />

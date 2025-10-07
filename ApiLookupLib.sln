@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunGame", "RunGame\RunGame.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingMod", "TestingMod\TestingMod.csproj", "{6C5F6906-3B42-4515-A950-393943AE1FA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLookupLibSystems", "ApiLookupLibSystems\ApiLookupLibSystems.csproj", "{D18C508B-2D8A-480D-A714-726A67E49B0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

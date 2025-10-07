@@ -9,7 +9,7 @@ namespace TemperatureApi.Helper;
 
 public static class TemperatureApiGetters {
 
-    public static TemperatureApiModSystem TemperatureProviders(this ApiLookupRegistry reg) {
-        return reg.modLoader.GetModSystem<TemperatureApiModSystem>();
+    public static TemperatureApis TemperatureProviders(this ApiLookupRegistry reg) {
+        throw new NotImplementedException("To be filled by Harmony");
     }
 }

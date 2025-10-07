@@ -5,11 +5,6 @@ using ApiLookupLib.Impl;
 using TemperatureApi.Api;
 using Vintagestory.API.Common;
 
-[assembly: ModInfo("TemperatureApi", "temperatureapi",
-    Authors = new string[] { "LubieKakao1212" },
-    Description = "TODO",
-    Version = "1.0.0")]
-
 namespace TemperatureApi {
     public class TemperatureApiModSystem : ModSystem {
 

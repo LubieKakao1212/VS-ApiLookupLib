@@ -5,20 +5,15 @@ using TemperatureApi.Helper;
 using TemperatureApi.Impl;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
-using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
 namespace TemperatureApi;
 
-public class RegisterApiGettersModSystem : ModSystem {
-
-    private readonly ConstantTemperatureProvider _litTorchProvider = new(600f);
+public static class TemperatureApiDefaults {
     
-    public override double ExecuteOrder() {
-        return 1.0;
-    }
-
-    public override void AssetsFinalize(ICoreAPI api) {
+    private static readonly ConstantTemperatureProvider _litTorchProvider = new(600f);
+    
+    public static void RegisterDefaults(ICoreAPI api) {
         var apiSys = api.ApiLookups().TemperatureProviders();
 
         var itemLookup = apiSys.ItemStack;
@@ -36,23 +31,23 @@ public class RegisterApiGettersModSystem : ModSystem {
         blockLookup.RegisterForBlocks(Constant(_litTorchProvider), new AssetLocation("torch-*-lit-*"));
     }
     
-    private ITemperatureProvider CoalPileGetter(BlockEntity be, NoContext context) {
+    private static ITemperatureProvider CoalPileGetter(BlockEntity be, NoContext context) {
         return new CoalPileTemperatureProvider((BlockEntityCoalPile)be);
     }
 
-    private ITemperatureProvider FirepitGetter(BlockEntity be, NoContext context) {
+    private static ITemperatureProvider FirepitGetter(BlockEntity be, NoContext context) {
         return new FirepitTemperatureProvider((BlockEntityFirepit)be);
     }
 
-    private ITemperatureProvider ForgeGetter(BlockEntity be, NoContext context) {
+    private static ITemperatureProvider ForgeGetter(BlockEntity be, NoContext context) {
         return new ForgeTemperatureProvider((BlockEntityForge)be);
     }
 
-    private IApiLookupBase<ITemperatureProvider, NoContext, BlockPos>.Getter Constant(ConstantTemperatureProvider provider) {
+    private static IApiLookupBase<ITemperatureProvider, NoContext, BlockPos>.Getter Constant(ConstantTemperatureProvider provider) {
         return (world, pos, ctx) => provider;
     }
     
-    private ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, ItemStack stack, NoContext context) {
+    private static ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, ItemStack stack, NoContext context) {
         if (CanItemStackHeat(stack)) {
             return new ItemStackTemperatureProvider(world, stack);
         }
@@ -60,8 +55,7 @@ public class RegisterApiGettersModSystem : ModSystem {
     }
 
     //Know I this name incorrect is
-    private bool CanItemStackHeat(ItemStack stack) {
+    private static bool CanItemStackHeat(ItemStack stack) {
         return stack.ItemAttributes?["allowHeating"] != null && stack.ItemAttributes["allowHeating"].AsBool();
     }
-    
 }
