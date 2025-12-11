@@ -1,0 +1,9 @@
+﻿{
+  "type": "code",
+  "name": "Api-Lookup Lib",
+  "modid": "apilookuplib",
+  "version": "1.0.0",
+  "description": "TODO",
+  "authors": ["LubieKakao122"],
+  "dependencies": { "game": "*", "survival": "*" }
+}

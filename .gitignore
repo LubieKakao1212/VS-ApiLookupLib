@@ -8,4 +8,5 @@ riderModule.iml
 
 /.template.config/
 
-/Mods/
+/Mods/**/*.dll
+!/Mods/ApiLookupLib/modinfo.json
