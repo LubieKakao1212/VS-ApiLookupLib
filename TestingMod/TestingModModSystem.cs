@@ -11,9 +11,17 @@ using Vintagestory.API.Common;
 
 namespace TestingMod {
     public class TestingModModSystem : ModSystem {
-        public override void Start(ICoreAPI api) {
-            var harmony = new Harmony("TestMod");
-            harmony.PatchAll();
+
+        private readonly Harmony _harmony = new Harmony("TestMod");
+            
+        public override void StartClientSide(ICoreClientAPI api) {
+            base.StartClientSide(api);
+            _harmony.PatchAll();
+        }
+
+        public override void Dispose() {
+            base.Dispose();
+            _harmony.UnpatchAll(_harmony.Id);
         }
     }
 }
