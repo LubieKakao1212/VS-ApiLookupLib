@@ -39,7 +39,7 @@ namespace TestingMod {
             
             lookup.RegisterForCollectibleBehaviors(SidesGetter("Falling", BlockFacing.EAST, BlockFacing.NORTH, BlockFacing.SOUTH, BlockFacing.WEST), true, typeof(BlockBehaviorUnstableFalling));
 
-            lookup.RegisterForBlocks(BlockPosGetter(BlockFacing.UP, BlockFacing.DOWN), AssetLocation.Create("game", "*clay*"));
+            lookup.RegisterForBlocks(BlockPosGetter(BlockFacing.UP, BlockFacing.DOWN), AssetLocation.Create("*clay*"));
             lookup.RegisterFallback(AllSidesGetter("Hello"));
         }
 
@@ -59,14 +59,14 @@ namespace TestingMod {
         public IBlockApiLookup<ITestApi, BlockFacing>.Getter BlockPosGetter(params BlockFacing[] sides) {
             return (world, source, context) => {
                 if (sides.Contains(context)) {
-                    return new TestApiImpl(source.ToString());
+                    return new TestApiBlockPos(source);
                 }
                 return null;
             };
         }
         
         public IBlockApiLookup<ITestApi, BlockFacing>.GetterBlockEntity SidesGetterBE(string message, params BlockFacing[] sides) {
-            return (world, context) => {
+            return (be, context) => {
                 if (sides.Contains(context)) {
                     return new TestApiImpl(message);
                 }
