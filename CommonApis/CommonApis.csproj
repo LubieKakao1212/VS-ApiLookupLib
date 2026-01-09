@@ -4,7 +4,6 @@
         <TargetFramework>net8.0</TargetFramework>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\$(Configuration)\Mods</OutputPath>
-        <RootNamespace>ApiLookupImplSystems</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
@@ -33,12 +32,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
-      <ProjectReference Include="..\TemperatureApi\TemperatureApi.csproj" />
-      <ProjectReference Include="..\TestingMod\TestingMod.csproj" />
     </ItemGroup>
 
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">
-        <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods/ApiLookupLib"/>
+        <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods"/>
     </Target>
 
 </Project>

@@ -1,19 +1,28 @@
 ﻿using ApiLookupLib.API;
 using ApiLookupLib.Helper;
-using TemperatureApi.Api;
-using TemperatureApi.Helper;
+using CommonApis.Temperature.Api;
+using CommonApis.Temperature.Helper;
+using CommonApis.Temperature.Impl;
 using TemperatureApi.Impl;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
-namespace TemperatureApi;
+namespace CommonApis.Temperature.Systems;
 
-public static class TemperatureApiDefaults {
+public class TemperatureApiDefaults : ModSystem {
     
     private static readonly ConstantTemperatureProvider _litTorchProvider = new(600f);
-    
-    public static void RegisterDefaults(ICoreAPI api) {
+
+    public override double ExecuteOrder() {
+        return 1.0;
+    }
+
+    public override void AssetsFinalize(ICoreAPI api) {
+        RegisterDefaults(api);
+    }
+
+    public void RegisterDefaults(ICoreAPI api) {
         var apiSys = api.ApiLookups().TemperatureProviders();
 
         var itemLookup = apiSys.ItemStack;

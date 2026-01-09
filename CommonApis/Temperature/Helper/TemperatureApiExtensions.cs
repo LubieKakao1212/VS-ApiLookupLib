@@ -1,6 +1,7 @@
-﻿using TemperatureApi.Api;
+﻿using CommonApis.Temperature.Api;
+using TemperatureApi.Helper;
 
-namespace TemperatureApi.Helper;
+namespace CommonApis.Temperature.Helper;
 
 public static class TemperatureApiExtensions {
 

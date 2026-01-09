@@ -4,11 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using ApiLookupLib.Helper;
 using Vintagestory.API.Common;
 
-[assembly: ModInfo("ApiLookupLob", "apilookuplib",
-    Authors = ["LubieKakao1212"],
-    Description = "TODO",
-    Version = "0.1.0")]
-
 namespace ApiLookupLib.Systems;
 
 public class LookupCacheSystem : ModSystem {

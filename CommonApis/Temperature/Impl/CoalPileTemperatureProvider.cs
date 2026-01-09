@@ -1,7 +1,7 @@
-﻿using TemperatureApi.Api;
+﻿using CommonApis.Temperature.Api;
 using Vintagestory.GameContent;
 
-namespace TemperatureApi.Impl;
+namespace CommonApis.Temperature.Impl;
 
 public class CoalPileTemperatureProvider(BlockEntityCoalPile be) : ITemperatureProvider {
     

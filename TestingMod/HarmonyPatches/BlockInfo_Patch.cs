@@ -1,4 +1,5 @@
 ﻿using ApiLookupLib.Helper;
+using CommonApis.Temperature.Helper;
 using HarmonyLib;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -10,17 +11,17 @@ namespace TestingMod.HarmonyPatches;
 public class BlockInfo_Patch {
 
     static string Postfix(string infoIn, IWorldAccessor world, BlockPos pos, IPlayer forPlayer) {
-        // var lookup = world.ApiLookups().TemperatureProviders().Block;
-        // var temp = lookup.Get(world, pos, null);
-        //
-        // if (temp != null) {
-        //     infoIn += $"\n[Debug] Temperaute: {temp.GetTemperature()}";
-        // }
+        var temperatureLookup = world.ApiLookups().TemperatureProviders().Block;
+        var tempApi = temperatureLookup.Get(world, pos, default);
         
-        var lookup = world.ApiLookups().TestApi();
+        if (tempApi != null) {
+            infoIn += $"\n[Debug] Temperaute: {tempApi.GetTemperature()}";
+        }
+        
+        var testLookup = world.ApiLookups().TestApi();
 
         var sel = forPlayer.CurrentBlockSelection;
-        var testApi = lookup.Get(world, pos, sel.Face);
+        var testApi = testLookup.Get(world, pos, sel.Face);
         
         if (testApi != null) {
             infoIn += $"\n[Debug] Test: {testApi.Message}";

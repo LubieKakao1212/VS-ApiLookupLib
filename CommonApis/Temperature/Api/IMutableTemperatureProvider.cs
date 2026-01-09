@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TemperatureApi.Api;
+﻿namespace CommonApis.Temperature.Api;
 
 public interface IMutableTemperatureProvider : ITemperatureProvider {
 

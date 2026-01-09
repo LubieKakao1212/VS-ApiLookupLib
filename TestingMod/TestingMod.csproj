@@ -32,6 +32,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
+      <ProjectReference Include="..\CommonApis\CommonApis.csproj" />
     </ItemGroup>
 
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">

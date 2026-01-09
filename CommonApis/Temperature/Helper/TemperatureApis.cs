@@ -1,9 +1,9 @@
 ﻿using ApiLookupLib.API;
 using ApiLookupLib.Helper;
-using TemperatureApi.Api;
+using CommonApis.Temperature.Api;
 using Vintagestory.API.Common;
 
-namespace TemperatureApi.Helper;
+namespace CommonApis.Temperature.Helper;
 
 public ref struct TemperatureApis(IModLoader modLoader, IItemStackApiLookup<ITemperatureProvider, NoContext> itemStack, IBlockApiLookup<ITemperatureProvider, NoContext> block) {
 

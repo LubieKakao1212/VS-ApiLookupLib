@@ -31,6 +31,6 @@
     </ItemGroup>
     
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">
-        <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods/ApiLookupLib"/>
+        <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods"/>
     </Target>
 </Project>

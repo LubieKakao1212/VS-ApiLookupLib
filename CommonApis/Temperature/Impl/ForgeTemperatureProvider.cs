@@ -1,4 +1,4 @@
-﻿using TemperatureApi.Api;
+﻿using CommonApis.Temperature.Api;
 using Vintagestory.GameContent;
 
 namespace TemperatureApi.Impl;

@@ -2,13 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLookupLib", "ApiLookupLib\ApiLookupLib.csproj", "{3091DECA-8ECA-415B-A4D4-1055774C6F5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureApi", "TemperatureApi\TemperatureApi.csproj", "{87BD7F0D-72B8-4FC7-946A-2A8007798999}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunGame", "RunGame\RunGame.csproj", "{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingMod", "TestingMod\TestingMod.csproj", "{6C5F6906-3B42-4515-A950-393943AE1FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureApiSystems", "TemperatureApiSystems\TemperatureApiSystems.csproj", "{D18C508B-2D8A-480D-A714-726A67E49B0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonApis", "CommonApis\CommonApis.csproj", "{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +18,6 @@ Global
 		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3091DECA-8ECA-415B-A4D4-1055774C6F5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87BD7F0D-72B8-4FC7-946A-2A8007798999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87BD7F0D-72B8-4FC7-946A-2A8007798999}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87BD7F0D-72B8-4FC7-946A-2A8007798999}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87BD7F0D-72B8-4FC7-946A-2A8007798999}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,9 +26,9 @@ Global
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C5F6906-3B42-4515-A950-393943AE1FA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D18C508B-2D8A-480D-A714-726A67E49B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

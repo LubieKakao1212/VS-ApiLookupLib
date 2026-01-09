@@ -2,10 +2,10 @@
 using ApiLookupLib.API;
 using ApiLookupLib.Helper;
 using ApiLookupLib.Impl;
-using TemperatureApi.Api;
+using CommonApis.Temperature.Api;
 using Vintagestory.API.Common;
 
-namespace TemperatureApi {
+namespace CommonApis.Temperature.Systems {
     public class TemperatureApiModSystem : ModSystem {
 
         public IItemStackApiLookup<ITemperatureProvider, NoContext> ItemStack => GetApiOrFail(_itemStackLookup);
