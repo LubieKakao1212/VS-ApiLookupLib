@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\$(Configuration)\Mods</OutputPath>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,7 +32,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
-      <ProjectReference Include="..\TemperatureApi\TemperatureApi.csproj" />
     </ItemGroup>
 
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">

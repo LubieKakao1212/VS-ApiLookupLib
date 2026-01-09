@@ -21,7 +21,7 @@ namespace TemperatureApi {
         
         public override void AssetsFinalize(ICoreAPI api) {
             _itemStackLookup = new SimpleItemStackApiLookup<ITemperatureProvider, NoContext>(api.World);
-            _blockLookup = new SimpleBlockApiLookup<ITemperatureProvider, NoContext>(api.World);
+            _blockLookup = new SimpleBlockApiLookup<ITemperatureProvider, NoContext>(api);
         }
         
         private static TValue GetApiOrFail<TValue>(TValue? value) {
