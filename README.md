@@ -8,7 +8,7 @@ Also `BlockEntityFirepit.changeTemperature` is not static even though it doesn't
 - Inventories and Item/Fluid Storage - This is even more messy, because sometimes subclasses of `InventoryBase` are being used for item storage and sometimes it's `ItemStack[]`
 
 ## What this does?
-This library allows to "look up" an api from a given item/block (soon also entities). Different lookups may have arbitrary "contexts" such as `BlockFacing` for directional access. (How many chests do you want? 1.57 liters!)
+This library allows to "look up" an api from a given item/block (soon also entities). Different lookups may have arbitrary "contexts" such as `BlockFacing` for directional access.
 ## How to use?
 ### Use Nullability checks!
 It is recommended to use this library with nullability checks enabled.
