@@ -2,6 +2,7 @@
 using ApiLookupLib.Helper;
 using CommonApis.Temperature.Api;
 using Vintagestory.API.Common;
+#pragma warning disable ItemLookup_Experimental
 
 namespace CommonApis.Temperature.Helper;
 

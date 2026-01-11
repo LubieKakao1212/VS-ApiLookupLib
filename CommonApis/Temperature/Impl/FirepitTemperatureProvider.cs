@@ -8,6 +8,4 @@ public class FirepitTemperatureProvider(BlockEntityFirepit blockEntity) : ITempe
     public float GetTemperature() {
         return blockEntity.furnaceTemperature;
     }
-
-    public void Dispose() { }
 }

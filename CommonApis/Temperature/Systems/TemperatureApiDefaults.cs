@@ -7,12 +7,13 @@ using TemperatureApi.Impl;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+#pragma warning disable ItemLookup_Experimental
 
 namespace CommonApis.Temperature.Systems;
 
 public class TemperatureApiDefaults : ModSystem {
     
-    private static readonly ConstantTemperatureProvider _litTorchProvider = new(600f);
+    private static readonly ConstantTemperatureProvider LitTorchProvider = new(600f);
 
     public override double ExecuteOrder() {
         return 1.0;
@@ -37,7 +38,7 @@ public class TemperatureApiDefaults : ModSystem {
         
         blockLookup.RegisterForBlocks(CoalPileGetter, new AssetLocation("coalpile"));
         
-        blockLookup.RegisterForBlocks(Constant(_litTorchProvider), new AssetLocation("torch-*-lit-*"));
+        blockLookup.RegisterForBlocks(Constant(LitTorchProvider), new AssetLocation("torch-*-lit-*"));
     }
     
     private static ITemperatureProvider CoalPileGetter(BlockEntity be, NoContext context) {
@@ -56,15 +57,13 @@ public class TemperatureApiDefaults : ModSystem {
         return (world, pos, ctx) => provider;
     }
     
-    private static ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, ItemStack stack, NoContext context) {
-        if (CanItemStackHeat(stack)) {
-            return new ItemStackTemperatureProvider(world, stack);
-        }
-        return null;
+    private static ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, IItemAccess access, NoContext context) {
+        return new ItemStackTemperatureProvider(world, access);
     }
 
-    //Know I this name incorrect is
-    private static bool CanItemStackHeat(ItemStack stack) {
-        return stack.ItemAttributes?["allowHeating"] != null && stack.ItemAttributes["allowHeating"].AsBool();
-    }
+    // //Hmm, apparently this was not correct
+    // //Know I this name incorrect is
+    // private static bool CanItemStackHeat(ItemStack stack) {
+    //     return true;// stack.ItemAttributes?["allowHeating"] != null && stack.ItemAttributes["allowHeating"].AsBool();
+    // }
 }

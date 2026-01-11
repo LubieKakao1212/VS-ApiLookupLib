@@ -7,7 +7,7 @@ using ApiLookupLib.Systems;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
-namespace ApiLookupLib.Impl;
+namespace ApiLookupLib.Impl.Block;
 
 public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLookup<TValue, TContext, BlockPos>, IBlockApiLookup<TValue, TContext> {
 
@@ -15,8 +15,8 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
     private readonly IWorldAccessor _worldIds = api.World;
     private readonly IClassRegistryAPI _classes = api.ClassRegistry;
     
-    private readonly MultiDictionary<Block, IApiLookupBase<TValue, TContext, BlockPos>.Getter> _blockLookup = new();
-    private readonly MultiDictionary<Block, IBlockApiLookup<TValue, TContext>.GetterBlockEntity> _blockEntityLookup = new();
+    private readonly MultiDictionary<Vintagestory.API.Common.Block, IApiLookupBase<TValue, TContext, BlockPos>.Getter> _blockLookup = new();
+    private readonly MultiDictionary<Vintagestory.API.Common.Block, IBlockApiLookup<TValue, TContext>.GetterBlockEntity> _blockEntityLookup = new();
     
     // private readonly MultiDictionary<Block, IApiLookupBase<TValue, TContext, BlockPos>.Getter> _collectibleBehaviorLookup = new();
     // private readonly MultiDictionary<Block, IBlockApiLookup<TValue, TContext>.GetterBlockEntity> _blockEntityBehaviorLookup = new();
@@ -44,7 +44,7 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
         return base.Get(world, pos, context);
     }
 
-    public void RegisterForBlocks(IApiLookupBase<TValue, TContext, BlockPos>.Getter getter, params Block[] blocks) {
+    public void RegisterForBlocks(IApiLookupBase<TValue, TContext, BlockPos>.Getter getter, params Vintagestory.API.Common.Block[] blocks) {
         _blockLookup.AddToAll(blocks, getter);
     }
 
@@ -60,7 +60,7 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
     }
 
     public void RegisterForCollectibleBehaviors(IApiLookupBase<TValue, TContext, BlockPos>.Getter getter, bool inherited = false, params Type[] behaviorTypes) {
-        var blocksFiltered = new List<Block>();
+        var blocksFiltered = new List<Vintagestory.API.Common.Block>();
         
         blocksFiltered.AddRange(inherited
             ? _cache.BlocksByCollectibleBehaviorInherited.GetWithAny(behaviorTypes)
@@ -69,7 +69,7 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
         RegisterForBlocks(getter, blocksFiltered.ToArray());
     }
 
-    public void RegisterForBlocks(IBlockApiLookup<TValue, TContext>.GetterBlockEntity getter, params Block[] blocks) {
+    public void RegisterForBlocks(IBlockApiLookup<TValue, TContext>.GetterBlockEntity getter, params Vintagestory.API.Common.Block[] blocks) {
         _blockEntityLookup.AddToAll(blocks.Where(block => block.EntityClass != null), getter);
     }
 
@@ -107,7 +107,7 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
     }
 
     public void RegisterForBlockEntityBehaviors(IBlockApiLookup<TValue, TContext>.GetterBlockEntity getter, bool inherited = false, params Type[] behaviorTypes) {
-        var blocksFiltered = new List<Block>();
+        var blocksFiltered = new List<Vintagestory.API.Common.Block>();
 
         blocksFiltered.AddRange(inherited
             ? _cache.BlocksByEntityBehaviorInherited.GetWithAny(behaviorTypes)

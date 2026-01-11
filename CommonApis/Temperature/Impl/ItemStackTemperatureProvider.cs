@@ -1,21 +1,29 @@
-﻿using CommonApis.Temperature.Api;
+﻿using ApiLookupLib.API;
+using CommonApis.Temperature.Api;
 using Vintagestory.API.Common;
+#pragma warning disable ItemLookup_Experimental
 
-namespace TemperatureApi.Impl;
+namespace CommonApis.Temperature.Impl;
 
-public class ItemStackTemperatureProvider(IWorldAccessor world, ItemStack stack) : IMutableTemperatureProvider {
+public class ItemStackTemperatureProvider(IWorldAccessor world, IItemAccess itemAccess) : MutableTemperatureProviderBase(world.Logger) {
 
-    private float _temperature = stack.Collectible.GetTemperature(world, stack);
+    private float _temperature = itemAccess.Collectible.GetTemperature(world, itemAccess.CurrentStack);
     
-    public float GetTemperature() {
+    public override float GetTemperature() {
         return _temperature;
     }
 
-    public void SetTemperature(float temp) {
+    public override void SetTemperature(float temp) {
         _temperature = temp;
     }
 
-    public void Dispose() {
+    protected override void ApplyChanges() {
+        if (!itemAccess.IsValid) {
+            world.Logger.Warning($"{nameof(IItemAccess)} is no longer valid, value will not be set");
+            return;
+        }
+        var stack = itemAccess.CurrentStack;
         stack.Collectible.SetTemperature(world, stack, _temperature);
+        itemAccess.SetStack(stack);
     }
 }

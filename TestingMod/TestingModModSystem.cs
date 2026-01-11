@@ -21,7 +21,6 @@ namespace TestingMod {
         
         public override void StartClientSide(ICoreClientAPI api) {
             base.StartClientSide(api);
-            _harmony.PatchAll();
         }
 
         public override void Dispose() {
@@ -31,6 +30,9 @@ namespace TestingMod {
 
         public override void AssetsFinalize(ICoreAPI api) {
             base.AssetsFinalize(api);
+            if (api.Side == EnumAppSide.Client) {
+                _harmony.PatchAll();
+            }
 
             var lookup = api.ApiLookups().TestApi();
             lookup.RegisterForBlockEntityBehaviors(SidesGetterBE("Sensitive", BlockFacing.NORTH, BlockFacing.SOUTH), true, typeof(BEBehaviorBurning), typeof(BEBehaviorTemperatureSensitive));

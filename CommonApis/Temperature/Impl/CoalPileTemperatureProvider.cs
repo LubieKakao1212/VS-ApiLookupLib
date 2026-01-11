@@ -9,6 +9,4 @@ public class CoalPileTemperatureProvider(BlockEntityCoalPile be) : ITemperatureP
         return be.IsBurning ? be.BurnTemperature : 20;
     }
 
-    public void Dispose() { }
-
 }

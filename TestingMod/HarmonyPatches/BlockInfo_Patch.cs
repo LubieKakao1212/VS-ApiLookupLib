@@ -15,7 +15,7 @@ public class BlockInfo_Patch {
         var tempApi = temperatureLookup.Get(world, pos, default);
         
         if (tempApi != null) {
-            infoIn += $"\n[Debug] Temperaute: {tempApi.GetTemperature()}";
+            infoIn += $"\n[Debug] Temperaute: {tempApi.GetTemperature():N0}";
         }
         
         var testLookup = world.ApiLookups().TestApi();

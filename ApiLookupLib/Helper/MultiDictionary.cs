@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ApiLookupLib.Impl;
+namespace ApiLookupLib.Helper;
 
 public class MultiDictionary<TKey, TValue> where TKey : notnull {
 

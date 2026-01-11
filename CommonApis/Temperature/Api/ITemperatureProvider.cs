@@ -2,7 +2,7 @@
 
 namespace CommonApis.Temperature.Api;
 
-public interface ITemperatureProvider : IDisposable {
+public interface ITemperatureProvider {
     
     public float GetTemperature();
 

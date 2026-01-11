@@ -8,8 +8,8 @@ public class SimpleApiLookup<TValue, TContext, TSourceArg> : IApiLookupBase<TVal
 
     private readonly List<IApiLookupBase<TValue, TContext, TSourceArg>.Getter> _fallbacks = new();
 
-    public virtual TValue? Get(IWorldAccessor world, TSourceArg pos, TContext context) {
-        return GetFallback(world, pos, context);
+    public virtual TValue? Get(IWorldAccessor world, TSourceArg source, TContext context) {
+        return GetFallback(world, source, context);
     }
     
     public void RegisterFallback(IApiLookupBase<TValue, TContext, TSourceArg>.Getter getter) {

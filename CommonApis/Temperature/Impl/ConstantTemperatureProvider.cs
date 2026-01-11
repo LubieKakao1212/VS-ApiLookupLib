@@ -7,6 +7,4 @@ public class ConstantTemperatureProvider(float temperature) : ITemperatureProvid
     public float GetTemperature() {
         return temperature;
     }
-
-    public void Dispose() { }
 }

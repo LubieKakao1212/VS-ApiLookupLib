@@ -1,6 +1,8 @@
-﻿namespace CommonApis.Temperature.Api;
+﻿using System;
 
-public interface IMutableTemperatureProvider : ITemperatureProvider {
+namespace CommonApis.Temperature.Api;
+
+public interface IMutableTemperatureProvider : ITemperatureProvider, IDisposable {
 
     public void SetTemperature(float temp);
     
