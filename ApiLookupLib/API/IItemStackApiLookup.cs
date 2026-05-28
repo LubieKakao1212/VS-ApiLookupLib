@@ -5,7 +5,7 @@ using Vintagestory.API.Common;
 namespace ApiLookupLib.API;
 
 [Experimental("ItemLookup_Experimental")]
-public interface IItemStackApiLookup<TValue, TContext> : IApiLookupBase<TValue, TContext, IItemAccess> {
+public interface IItemStackApiLookup<TValue, TContext> : IApiLookupBase<TValue, TContext, ItemStack> {
     
     void RegisterForCollectibles(Getter getter, params CollectibleObject[] collectibles);
     void RegisterForCollectibles(Getter getter, AssetLocation wildcard);

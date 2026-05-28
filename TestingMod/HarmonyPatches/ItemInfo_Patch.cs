@@ -17,11 +17,12 @@ namespace TestingMod.HarmonyPatches;
 public class ItemInfo_Patch {
 
     static void Postfix(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo) {
-        var temperatureLookup = world.ApiLookups().TemperatureProviders().ItemStack;
-        var tempApi = temperatureLookup.Get(world, new SlotItemAccess(inSlot), default);
-        if (tempApi != null) {
-            dsc.Append($"[Debug] Temperaute: {tempApi.GetTemperature():N0}");
-        }
+        //TODO Temporarily disabled
+        // var temperatureLookup = world.ApiLookups().TemperatureProviders().ItemStack;
+        // var tempApi = temperatureLookup.Get(world, new SlotItemAccess(inSlot), default);
+        // if (tempApi != null) {
+        //     dsc.Append($"[Debug] Temperaute: {tempApi.GetTemperature():N0}");
+        // }
     }
     
 }

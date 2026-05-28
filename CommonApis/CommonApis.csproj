@@ -34,6 +34,11 @@
       <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="DataAttributes\" />
+      <Folder Include="Storage\Systems\" />
+    </ItemGroup>
+
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">
         <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods"/>
     </Target>

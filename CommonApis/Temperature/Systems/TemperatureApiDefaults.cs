@@ -26,8 +26,8 @@ public class TemperatureApiDefaults : ModSystem {
     public void RegisterDefaults(ICoreAPI api) {
         var apiSys = api.ApiLookups().TemperatureProviders();
 
-        var itemLookup = apiSys.ItemStack;
-        itemLookup.RegisterFallback(ItemStackFallbackGetter);
+        // var itemLookup = apiSys.ItemStack;
+        // itemLookup.RegisterFallback(ItemStackFallbackGetter);
 
         var blockLookup = apiSys.Block;
         blockLookup.RegisterForBlocks(FirepitGetter, new AssetLocation("firepit-lit"));
@@ -57,9 +57,9 @@ public class TemperatureApiDefaults : ModSystem {
         return (world, pos, ctx) => provider;
     }
     
-    private static ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, IItemAccess access, NoContext context) {
-        return new ItemStackTemperatureProvider(world, access);
-    }
+    // private static ITemperatureProvider? ItemStackFallbackGetter(IWorldAccessor world, IItemAccess access, NoContext context) {
+    //     return new ItemStackTemperatureProvider(world, access);
+    // }
 
     // //Hmm, apparently this was not correct
     // //Know I this name incorrect is

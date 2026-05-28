@@ -6,6 +6,7 @@ namespace TemperatureApi.Impl;
 public class ForgeTemperatureProvider(BlockEntityForge be) : ITemperatureProvider {
 
     public float GetTemperature() {
-        return be.Lit ? 1100f : 20f;
+        return 20f;
+        // return  ? 1100f : 20f;
     }
 }

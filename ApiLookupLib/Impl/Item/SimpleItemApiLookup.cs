@@ -10,31 +10,31 @@ using Vintagestory.API.Common;
 namespace ApiLookupLib.Impl.Item;
 
 [Experimental("ItemLookup_Experimental")]
-public class SimpleItemApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLookup<TValue, TContext, IItemAccess>, IItemStackApiLookup<TValue, TContext> {
+public class SimpleItemApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLookup<TValue, TContext, ItemStack>, IItemStackApiLookup<TValue, TContext> {
     
     private readonly LookupCacheSystem _cache = api.ModLoader.GetModSystem<LookupCacheSystem>();
     private readonly IWorldAccessor _worldIds = api.World;
     private readonly IClassRegistryAPI _classes = api.ClassRegistry;
     
-    private readonly MultiDictionary<CollectibleObject, IApiLookupBase<TValue, TContext, IItemAccess>.Getter> _itemsLookup = new();
+    private readonly MultiDictionary<CollectibleObject, IApiLookupBase<TValue, TContext, ItemStack>.Getter> _itemsLookup = new();
 
-    public override TValue? Get(IWorldAccessor world, IItemAccess access, TContext context) {
-        var collectible = access.CurrentStack.Collectible;
+    public override TValue? Get(IWorldAccessor world, ItemStack source, TContext context) {
+        var collectible = source.Collectible;
 
         foreach (var getter in _itemsLookup.GetAllOrEmpty(collectible)) {
-            var value = getter(world, access, context);
+            var value = getter(world, source, context);
             if (value != null) {
                 return value;
             }
         }
-        return base.Get(world, access, context);
+        return base.Get(world, source, context);
     }
 
-    public void RegisterForCollectibles(IApiLookupBase<TValue, TContext, IItemAccess>.Getter getter, params CollectibleObject[] collectibles) {
+    public void RegisterForCollectibles(IApiLookupBase<TValue, TContext, ItemStack>.Getter getter, params CollectibleObject[] collectibles) {
         _itemsLookup.AddToAll(collectibles, getter);
     }
 
-    public void RegisterForCollectibles(IApiLookupBase<TValue, TContext, IItemAccess>.Getter getter, AssetLocation wildcard) {
+    public void RegisterForCollectibles(IApiLookupBase<TValue, TContext, ItemStack>.Getter getter, AssetLocation wildcard) {
         var blocks = _worldIds.SearchBlocks(wildcard);
         var items = _worldIds.SearchItems(wildcard);
         
@@ -49,7 +49,7 @@ public class SimpleItemApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLook
             .ToArray());
     }
 
-    public void RegisterForBehaviors(IApiLookupBase<TValue, TContext, IItemAccess>.Getter getter, bool inherited, params Type[] behaviorTypes) {
+    public void RegisterForBehaviors(IApiLookupBase<TValue, TContext, ItemStack>.Getter getter, bool inherited, params Type[] behaviorTypes) {
         var blocksFiltered = new List<CollectibleObject>();
         
         blocksFiltered.AddRange(inherited
@@ -59,7 +59,7 @@ public class SimpleItemApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLook
         RegisterForCollectibles(getter, blocksFiltered.ToArray());
     }
 
-    public void RegisterForTypes(IApiLookupBase<TValue, TContext, IItemAccess>.Getter getter, bool inherited, params Type[] collectibleTypes) {
+    public void RegisterForTypes(IApiLookupBase<TValue, TContext, ItemStack>.Getter getter, bool inherited, params Type[] collectibleTypes) {
         RegisterForCollectibles(getter, 
             _worldIds.Collectibles
                 .Where(

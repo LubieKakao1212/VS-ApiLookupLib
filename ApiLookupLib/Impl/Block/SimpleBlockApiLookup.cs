@@ -21,10 +21,10 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
     // private readonly MultiDictionary<Block, IApiLookupBase<TValue, TContext, BlockPos>.Getter> _collectibleBehaviorLookup = new();
     // private readonly MultiDictionary<Block, IBlockApiLookup<TValue, TContext>.GetterBlockEntity> _blockEntityBehaviorLookup = new();
     
-    public override TValue? Get(IWorldAccessor world, BlockPos pos, TContext context) {
+    public override TValue? Get(IWorldAccessor world, BlockPos source, TContext context) {
         var accessor = world.BlockAccessor;
-        var block = accessor.GetBlock(pos);
-        var be = accessor.GetBlockEntity(pos);
+        var block = accessor.GetBlock(source);
+        var be = accessor.GetBlockEntity(source);
         if (be != null) {
             foreach (var getter in _blockEntityLookup.GetAllOrEmpty(block)) {
                 var value = getter(be, context);
@@ -35,13 +35,13 @@ public class SimpleBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleApiLoo
         }
         
         foreach (var getter in _blockLookup.GetAllOrEmpty(block)) {
-            var value = getter(world, pos, context);
+            var value = getter(world, source, context);
             if (value != null) {
                 return value;
             }
         }
 
-        return base.Get(world, pos, context);
+        return base.Get(world, source, context);
     }
 
     public void RegisterForBlocks(IApiLookupBase<TValue, TContext, BlockPos>.Getter getter, params Vintagestory.API.Common.Block[] blocks) {
