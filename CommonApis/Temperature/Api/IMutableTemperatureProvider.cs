@@ -1,9 +1,10 @@
 ﻿using System;
+using CommonApis.Transact.Api;
 
 namespace CommonApis.Temperature.Api;
 
-public interface IMutableTemperatureProvider : ITemperatureProvider, IDisposable {
+public interface IMutableTemperatureProvider : ITemperatureProvider {
 
-    public void SetTemperature(float temp);
+    public void SetTemperature(ITransactionContext transaction, float temp);
     
 }

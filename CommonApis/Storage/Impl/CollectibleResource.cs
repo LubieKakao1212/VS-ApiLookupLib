@@ -3,15 +3,17 @@ using System.Diagnostics.CodeAnalysis;
 using CommonApis.Storage.Api;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.GameContent;
 
 namespace CommonApis.Storage.Impl;
 
+[Experimental("IStorage")]
 public class CollectibleResource(CollectibleObject collectible, ITreeAttribute attributes) : IResource<CollectibleResource> {
-
+    
     public CollectibleObject Collectible { get; } = collectible;
     //TODO make immutable
     public ITreeAttribute Attributes { get; } = attributes;
-
+    
     public static CollectibleResource From(ItemStack stack) {
         return new CollectibleResource(stack.Collectible, stack.Attributes.Clone());
     }
@@ -39,21 +41,47 @@ public class CollectibleResource(CollectibleObject collectible, ITreeAttribute a
         result = From(slotOnto.Itemstack);
         return true;
     }
-
+    
     public ItemStack AsItemStack(int amount) {
         var attribs = Attributes.Clone();
-
-        var stack = Collectible switch {
-            Item item => new ItemStack(item, amount),
-            Block block => new ItemStack(block, amount),
-            _ => throw new ApplicationException("Impossible!!!")
-        };
-        stack.Attributes = attribs;
         
+        var stack = new ItemStack(Collectible, amount) {
+            Attributes = attribs
+        };
         return stack;
     }
     
     public bool Equals(CollectibleResource? other) {
         return other != null && Collectible == other.Collectible && Attributes.Equals(other.Attributes);
     }
+}
+
+[Experimental("IStorage")]
+public static class CollectibleResourceExtensions {
+
+    /// <summary>
+    /// Safe to call on nullable instances
+    /// </summary>
+    /// <returns></returns>
+    public static ResourceStack<CollectibleResource> AsResourceStack(this ItemStack? stackIn) {
+        if (stackIn == null) {
+            return ResourceStack<CollectibleResource>.Empty;
+        }
+        return new ResourceStack<CollectibleResource>(CollectibleResource.From(stackIn), stackIn.StackSize);
+    }
+    
+    
+    /// <summary>
+    /// Will return null if <paramref name="stackIn"/> is considered empty
+    /// </summary>
+    /// <returns></returns>
+    public static ItemStack? AsItemStack(this ResourceStack<CollectibleResource> stackIn) {
+        if (stackIn.IsEmpty) {
+            return null;
+        }
+
+        var amt = checked((int)stackIn.amount);
+        return stackIn.resource.AsItemStack(amt);
+    }
+
 }

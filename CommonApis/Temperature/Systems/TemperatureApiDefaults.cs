@@ -3,7 +3,6 @@ using ApiLookupLib.Helper;
 using CommonApis.Temperature.Api;
 using CommonApis.Temperature.Helper;
 using CommonApis.Temperature.Impl;
-using TemperatureApi.Impl;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;

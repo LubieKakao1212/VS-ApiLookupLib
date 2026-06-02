@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CommonApis.Transaction.Api;
+namespace CommonApis.Transact.Api;
 
 public abstract class TransactionParticipant<TSnapshot> : ITransactionParticipant {
 

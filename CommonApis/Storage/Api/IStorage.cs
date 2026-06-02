@@ -1,13 +1,17 @@
-﻿using CommonApis.Transaction.Api;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using CommonApis.Transact.Api;
 
 namespace CommonApis.Storage.Api;
 
+[Experimental("IStorage")]
 public interface IStorage<TResource> where TResource : IResource<TResource> {
 
     delegate bool ExtractPredicate(TResource resource);
     
     int SlotCount { get; }
-    TResource GetResourceInSlot(int slot);
+    
+    ResourceStack<TResource> GetContentInSlot(int slot);
 
     /// <summary>
     /// Inserts a given amount of a given resource into this storage DOES NOT ATTEMPT to merge with similar resources
@@ -44,5 +48,11 @@ public interface IStorage<TResource> where TResource : IResource<TResource> {
     /// <param name="maxAmount"></param>
     /// <returns></returns>
     long ExtractAny(ITransactionContext transaction, long maxAmount, ExtractPredicate extractPredicate);
+
+    void AssertSlotIndex(int slot) {
+        if (slot < 0 || slot >= SlotCount) {
+            throw new IndexOutOfRangeException($"{slot} < 0 ||  {slot} >= SlotCount");
+        }
+    }
     
 }

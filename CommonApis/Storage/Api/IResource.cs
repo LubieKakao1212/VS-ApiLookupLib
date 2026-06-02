@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CommonApis.Storage.Api;
 
@@ -6,6 +7,7 @@ namespace CommonApis.Storage.Api;
 /// Derived classes should override GetHashCode() to match Equals()
 /// </summary>
 /// <typeparam name="TResource"></typeparam>
+[Experimental("IStorage")]
 public interface IResource<TResource> : IEquatable<TResource> where TResource : IResource<TResource> {
     
 }

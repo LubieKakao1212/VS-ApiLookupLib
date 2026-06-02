@@ -1,4 +1,4 @@
-﻿namespace CommonApis.Transaction.Api;
+﻿namespace CommonApis.Transact.Api;
 
 public interface ITransactionParticipant {
 
