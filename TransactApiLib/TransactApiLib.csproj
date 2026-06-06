@@ -31,8 +31,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
-      <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
+      <Folder Include="DataAttributes\" />
+      <Folder Include="Storage\Systems\" />
     </ItemGroup>
 
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunGame", "RunGame\RunGame.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingMod", "TestingMod\TestingMod.csproj", "{6C5F6906-3B42-4515-A950-393943AE1FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonApis", "CommonApis\CommonApis.csproj", "{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactApiLib", "TransactApiLib\TransactApiLib.csproj", "{136A2C0D-F172-44F5-9CBB-4D2E9B0E920C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

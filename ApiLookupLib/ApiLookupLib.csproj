@@ -29,6 +29,10 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
+    </ItemGroup>
     
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">
         <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods"/>
