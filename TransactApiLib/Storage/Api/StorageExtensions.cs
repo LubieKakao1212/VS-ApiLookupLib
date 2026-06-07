@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using TransactApiLib.Transact.Api;
+using Vintagestory.API.Common;
 
 namespace TransactApiLib.Storage.Api;
 
@@ -16,17 +17,14 @@ public static class StorageExtensions {
     /// <param name="amount">Maximum amount to be inserted</param>
     /// <returns>Actual amount inserted</returns>
     public static long Insert<TResource>(this IStorage<TResource> storage, ITransactionContext transaction, TResource resource, long amount) where TResource : IResource<TResource> {
-        var toInsert = amount;
-        for (int i = 0; i<storage.SlotCount; i++) {
-            toInsert = storage.Insert(transaction, i, resource, toInsert);
-
-            if (toInsert == 0) {
-                break;
-            }
-        }
-        return amount - toInsert;
+        return storage.DoInsert(amount, (stor, slot, toInsert) => stor.Insert(transaction, slot, resource, toInsert));
     }
 
+    //TODO Documentation
+    public static long InsertMerging<TResource>(this IStorage<TResource> storage, ITransactionContext transaction, TResource resource, long amount) where TResource : IResource<TResource> {
+        return storage.DoInsert(amount, (stor, slot, toInsert) => stor.InsertMerging(transaction, slot, resource, toInsert));
+    }
+    
     /// <summary>
     /// Extracts from the first slot of <paramref name="storage"/> with resource matched by <paramref name="extractPredicate"/>
     /// </summary>
@@ -68,5 +66,16 @@ public static class StorageExtensions {
         }
         return totalExtracted;
     }
-    
+
+    private static long DoInsert<TResource>(this IStorage<TResource> storage, long amount, Func<IStorage<TResource>, int, long, long> inserter) where TResource : IResource<TResource> {
+        var toInsert = amount;
+        for (int i = 0; i<storage.SlotCount; i++) {
+            toInsert = inserter(storage, i, toInsert);//storage.Insert(transaction, i, resource, toInsert);
+
+            if (toInsert == 0) {
+                break;
+            }
+        }
+        return amount - toInsert;
+    }
 }

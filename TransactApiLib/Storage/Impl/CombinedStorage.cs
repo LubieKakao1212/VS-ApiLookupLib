@@ -53,6 +53,12 @@ public class CombinedStorage<TResource> : IStorage<TResource> where TResource : 
         return AccessSlot(slot, (storage, inStorage) => storage.Insert(transaction, inStorage, resource, amount));
     }
 
+    public long InsertMerging(ITransactionContext transaction, int slot, TResource resource, long amount) {
+        AsStorage().AssertSlotIndex(slot);
+
+        return AccessSlot(slot, (storage, inStorage) => storage.InsertMerging(transaction, inStorage, resource, amount));
+    }
+
     public ResourceStack<TResource> Extract(ITransactionContext transaction, int slot, long maxAmount, IStorage<TResource>.ExtractPredicate extractPredicate) {
         AsStorage().AssertSlotIndex(slot);
         

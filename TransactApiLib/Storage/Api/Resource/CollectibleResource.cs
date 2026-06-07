@@ -1,11 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using TransactApiLib.Storage.Api;
+﻿using System.Diagnostics.CodeAnalysis;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
-using Vintagestory.GameContent;
 
-namespace TransactApiLib.Storage.Impl;
+namespace TransactApiLib.Storage.Api.Resource;
 
 [Experimental("IStorage")]
 public class CollectibleResource(CollectibleObject collectible, ITreeAttribute attributes) : IResource<CollectibleResource> {
@@ -27,13 +24,14 @@ public class CollectibleResource(CollectibleObject collectible, ITreeAttribute a
     /// <param name="result">Result of merging</param>
     /// <returns></returns>
     public bool TryMergeOnto(IWorldAccessor world, CollectibleResource other, IntRatio ratio, [NotNullWhen(true)] out CollectibleResource? result) {
-        var slotFrom = new DummySlot();
-        var slotOnto = new DummySlot();
-        
-        slotFrom.Itemstack = AsItemStack(ratio.numerator);
-        slotOnto.Itemstack = other.AsItemStack(ratio.denominator);
+        var slotOnto = new DummySlot() {
+            Itemstack = other.AsItemStack(ratio.denominator)
+        };
 
-        if (slotFrom.TryPutInto(world, slotOnto, ratio.numerator) != 0) {
+        var rs = new ResourceStack<CollectibleResource>(this, ratio.numerator);
+        var transferred = rs.MergeOntoSlot(world, slotOnto);
+
+        if (transferred == 0) {
             result = null;
             return false;
         }
@@ -79,18 +77,50 @@ public static class CollectibleResourceExtensions {
         return new ResourceStack<CollectibleResource>(CollectibleResource.From(stackIn), stackIn.StackSize);
     }
     
-    
-    /// <summary>
-    /// Will return null if <paramref name="stackIn"/> is considered empty
-    /// </summary>
-    /// <returns></returns>
-    public static ItemStack? AsItemStack(this ResourceStack<CollectibleResource> stackIn) {
-        if (stackIn.IsEmpty) {
-            return null;
+    extension(ResourceStack<CollectibleResource> stackIn) {
+        
+        /// <summary>
+        /// Will return null if <paramref name="stackIn"/> is considered empty
+        /// </summary>
+        /// <returns></returns>
+        public ItemStack? AsItemStack() {
+            if (stackIn.IsEmpty) {
+                return null;
+            }
+
+            var amt = checked((int)stackIn.amount);
+            return stackIn.resource.AsItemStack(amt);
         }
+        
+        /// <summary>
+        /// Will return null if <paramref name="stackIn"/> is considered empty
+        /// </summary>
+        /// <param name="leftover">Leftover amount if amount exceeded <see cref="int.MaxValue"/></param>
+        /// <returns></returns>
+        public ItemStack? AsItemStack(out long leftover) {
+            if (stackIn.IsEmpty) {
+                leftover = 0;
+                return null;
+            }
 
-        var amt = checked((int)stackIn.amount);
-        return stackIn.resource.AsItemStack(amt);
+            var amt = stackIn.amount > int.MaxValue ? int.MaxValue : (int)stackIn.amount;
+            leftover = stackIn.amount - amt;
+            return stackIn.resource.AsItemStack(amt);
+        }
+        
+        /// <summary>
+        /// Use to put contents of <paramref name="selfStack"/> into <paramref name="slotTo"/>, resulting in contents of <paramref name="slotTo"/> merging with <paramref name="selfStack"/>. <br/>
+        /// This is a DESTRUCTIVE operation
+        /// </summary>
+        /// <remarks>This is a transactionless operation and thus is not revertible. Should only be used when implementing Transaction based operations</remarks>
+        /// <returns>Amount inserted</returns>
+        public long MergeOntoSlot(IWorldAccessor world, ItemSlot slotOnto) {
+            var slotFrom = new DummySlot {
+                Itemstack = stackIn.AsItemStack()
+            };
+
+            var moved = slotFrom.TryPutInto(world, slotOnto, slotFrom.StackSize);
+            return moved;
+        }
     }
-
 }

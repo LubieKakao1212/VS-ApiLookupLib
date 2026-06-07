@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using TransactApiLib.Storage.Api;
-using TransactApiLib.Storage.Impl;
+using TransactApiLib.Storage.Api.Resource;
 
 namespace ApiLookupLib.API;
 

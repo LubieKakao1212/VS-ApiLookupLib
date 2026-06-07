@@ -33,16 +33,15 @@ public interface IStorage<TResource> where TResource : IResource<TResource> {
     /// <returns>Actual amount inserted</returns>
     long Insert(ITransactionContext transaction, int slot, TResource resource, long amount);
 
-    //TODO move to an extension of IStorage<CollectibleResource>
-    // /// <summary>
-    // /// Inserts a given amount of a given resource  into a specific slot of this storage DOES ATTEMPT to merge with similar resources 
-    // /// </summary>
-    // /// <param name="transaction">Transaction this is operation part of</param>
-    // /// <param name="slot">Slot to insert into, must be in bound [0, <see cref="SlotCount"/>)</param>
-    // /// <param name="resource">Resource to be inserted, matched using</param>
-    // /// <param name="amount">Maximum amount to be inserted</param>
-    // /// <returns>Actual amount inserted</returns>
-    // long InsertMerging(ITransactionContext transaction, TResource resource, long amount);
+    /// <summary>
+    /// Inserts a given amount of a given resource into a specific slot of this storage DOES ATTEMPT to merge with similar resources 
+    /// </summary>
+    /// <param name="transaction">Transaction this is operation part of</param>
+    /// <param name="slot">Slot to insert into, must be in bound [0, <see cref="SlotCount"/>)</param>
+    /// <param name="resource">Resource to be inserted, matched using</param>
+    /// <param name="amount">Maximum amount to be inserted</param>
+    /// <returns>Actual amount inserted</returns>
+    long InsertMerging(ITransactionContext transaction, int slot, TResource resource, long amount);
 
     /// <summary>
     /// Extracts from a given slot of this storage, if <paramref name="extractPredicate"/> returns false the result will be <see cref="ResourceStack{TResource}.Empty">ResourceStack.Empty</see>
