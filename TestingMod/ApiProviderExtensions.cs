@@ -1,5 +1,5 @@
-﻿using ApiLookupLib.API;
-using ApiLookupLib.Helper;
+﻿using CommonApis.ApiLookup.API;
+using CommonApis.ApiLookup.Helper;
 using Vintagestory.API.MathTools;
 
 namespace TestingMod;

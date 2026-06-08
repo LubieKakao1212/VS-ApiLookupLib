@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ApiLookupLib\ApiLookupLib.csproj" />
+      <ProjectReference Include="..\CommonApis\CommonApis.csproj" />
       <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
       <ProjectReference Include="..\TestingMod\TestingMod.csproj" />
     </ItemGroup>

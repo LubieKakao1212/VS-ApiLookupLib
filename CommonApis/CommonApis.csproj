@@ -5,6 +5,7 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\$(Configuration)\Mods</OutputPath>
         <Nullable>enable</Nullable>
+        <RootNamespace>CommonApis</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,12 +32,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CommonApis\CommonApis.csproj" />
       <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ApiLookup\" />
+    </ItemGroup>
+    
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">
         <Copy SourceFiles="$(OutputPath)/$(AssemblyName).dll" DestinationFolder="$(SolutionDir)/Mods"/>
     </Target>
-
 </Project>

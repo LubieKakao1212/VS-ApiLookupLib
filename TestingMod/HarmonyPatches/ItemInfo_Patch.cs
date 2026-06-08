@@ -1,8 +1,5 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using ApiLookupLib.Helper;
-using ApiLookupLib.Impl.Item;
-using TransactApiLib.Temperature.Helper;
 using HarmonyLib;
 using Vintagestory.API.Common;
 

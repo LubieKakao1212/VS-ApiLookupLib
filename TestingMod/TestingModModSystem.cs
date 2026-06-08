@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using ApiLookupLib.API;
-using ApiLookupLib.Helper;
+using CommonApis.ApiLookup.API;
+using CommonApis.ApiLookup.Helper;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;

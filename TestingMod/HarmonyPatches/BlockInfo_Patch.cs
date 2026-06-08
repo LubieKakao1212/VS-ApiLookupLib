@@ -1,5 +1,5 @@
-﻿using ApiLookupLib.Helper;
-using TransactApiLib.Temperature.Helper;
+﻿using CommonApis.ApiLookup.Helper;
+using CommonApis.Temperature.Helper;
 using HarmonyLib;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;

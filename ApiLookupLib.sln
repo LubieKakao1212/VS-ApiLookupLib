@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLookupLib", "ApiLookupLib\ApiLookupLib.csproj", "{3091DECA-8ECA-415B-A4D4-1055774C6F5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonApis", "CommonApis\CommonApis.csproj", "{3091DECA-8ECA-415B-A4D4-1055774C6F5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunGame", "RunGame\RunGame.csproj", "{AA0A5254-1B31-4EB8-9F9B-A2A2A79FDAD2}"
 EndProject

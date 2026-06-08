@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using ApiLookupLib.API;
-using ApiLookupLib.Impl.Block;
+using CommonApis.ApiLookup.API;
+using CommonApis.ApiLookup.Impl.Block;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 

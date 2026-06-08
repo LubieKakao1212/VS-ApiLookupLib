@@ -1,0 +1,19 @@
+﻿using CommonApis.ApiLookup.API;
+using CommonApis.ApiLookup.Helper;
+using CommonApis.Temperature.Api;
+using Vintagestory.API.Common;
+
+#pragma warning disable ItemLookup_Experimental
+
+namespace CommonApis.Temperature.Helper;
+
+public ref struct TemperatureApis(IModLoader modLoader, IItemStackApiLookup<ITemperatureProvider, NoContext> itemStack, IBlockApiLookup<ITemperatureProvider, NoContext> block) {
+
+    public IModLoader modLoader = modLoader;
+
+    public IItemStackApiLookup<ITemperatureProvider, NoContext> ItemStack { get; } = itemStack;
+
+    public IBlockApiLookup<ITemperatureProvider, NoContext> Block { get; } = block;
+
+
+}
