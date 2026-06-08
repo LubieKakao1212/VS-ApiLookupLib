@@ -16,7 +16,7 @@ public class CombinedStorage<TResource> : IStorage<TResource> where TResource : 
 
     private delegate TResult SlotAccessor<out TResult>(IStorage<TResource> storage, int inStorage);
     
-    private CombinedStorage(IEnumerable<IStorage<TResource>> storages) {
+    internal CombinedStorage(IEnumerable<IStorage<TResource>> storages) {
         _storages = new List<IStorage<TResource>>(storages);
 
         var sum = 0;
