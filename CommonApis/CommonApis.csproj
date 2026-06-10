@@ -32,10 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Folder Include="ApiLookup\" />
     </ItemGroup>
     

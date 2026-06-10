@@ -32,7 +32,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CommonApis\CommonApis.csproj" />
-      <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
     </ItemGroup>
 
     <Target Name="CopyAfterBuild" AfterTargets="AfterBuild">

@@ -10,7 +10,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CommonApis\CommonApis.csproj" />
-      <ProjectReference Include="..\TransactApiLib\TransactApiLib.csproj" />
       <ProjectReference Include="..\TestingMod\TestingMod.csproj" />
     </ItemGroup>
     

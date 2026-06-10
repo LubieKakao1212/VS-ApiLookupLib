@@ -1,6 +1,6 @@
 ﻿using Vintagestory.API.Common;
 
-[assembly: ModInfo("CommonApis", "commonapis",
+[assembly: ModInfo("Common APIs", "commonapis",
     Authors = ["LubieKakao1212"],
-    Description = "TODO",
+    Description = "A set of APIs useful to modders",
     Version = "0.2.0")]
