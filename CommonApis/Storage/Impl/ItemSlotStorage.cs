@@ -80,6 +80,7 @@ public class ItemSlotStorage(IWorldAccessor world, ItemSlot itemSlot) : Transact
 
     protected override void RestoreSnapshot(ResourceStack<CollectibleResource> snapshot) {
         ItemSlot.Itemstack = snapshot.AsItemStack();
+        ItemSlot.OnItemSlotModified(null); //I am not 100% sure this is correct. TODO figure out if it is
     }
     
     private IStorage<CollectibleResource> AsStorage() {

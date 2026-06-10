@@ -32,15 +32,13 @@ public abstract class TransactionParticipant<TSnapshot> : ITransactionParticipan
             RestoreSnapshot(snapshot.data);
         }
     }
-
-    public virtual void CloseFinal(TransactionCloseResult closeResult) { }
     
     protected abstract TSnapshot CreateSnapshot();
 
     protected abstract void RestoreSnapshot(TSnapshot snapshot);
 
     private struct SnapshotEntry(TSnapshot data, int depth) {
-        public TSnapshot data = data;
-        public int depth = depth;
+        public readonly TSnapshot data = data;
+        public readonly int depth = depth;
     }
 }
