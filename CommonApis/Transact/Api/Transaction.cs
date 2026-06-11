@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Vintagestory.API.Util;
 
 namespace CommonApis.Transact.Api;
 
@@ -94,11 +93,13 @@ public sealed class Transaction : ITransactionContext, IDisposable {
             }
         }
 
+        ManagerInstance.Value!.CurrentDepth--;
+        
         LifecycleState = TransactionLifecycleState.Closed;
     }
 
     private void AddClosables(IEnumerable<ITransactionClosable> closables) {
-        _closables.AddRange(closables);
+        _closables.UnionWith(closables);
     }
 
     private static int DepthOf(ITransactionContext? transaction) {
