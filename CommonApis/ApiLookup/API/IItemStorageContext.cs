@@ -1,25 +1,19 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using CommonApis.ApiLookup.Impl.Item;
 using CommonApis.Storage.Api;
 using CommonApis.Storage.Api.Resource;
 using CommonApis.Transact.Api;
+using Vintagestory.API.Common;
 
 namespace CommonApis.ApiLookup.API;
 
-/// <summary>
-/// TODO I may need to rethink this, there a re several issues:
-/// 1) If OnSlotDirty is triggered on every change, what should it do with snapshots?
-/// 2) 
-/// </summary>
 [Experimental("IStorage")]
 public interface IItemStorageContext {
-
-    public event Action OnSlotDirty;
 
     public int SlotInStorage { get; }
     
     IStorage<CollectibleResource> OwnerStorage { get; }
-
+    
     IStorage<CollectibleResource> MainSlot => OwnerStorage.Slot(SlotInStorage);
     
     IStorage<CollectibleResource> OtherSlots =>
@@ -49,4 +43,22 @@ public interface IItemStorageContext {
 
         return amount - toInsert;
     }
+
+    void AcceptOverflow(ITransactionContext transaction, CollectibleResource resource, long amount);
+
+    TValue? Find<TValue, TContext>(IItemStackApiLookup<TValue, TContext> lookup, IWorldAccessor world, TContext context) {
+        return lookup.Get(world, OtherSlots.GetContentInSlot(SlotInStorage).AsItemStack()!, new ItemLookupContext<TContext>() {
+            Context = context,
+            Storage = this
+        });
+    }
+}
+
+[Experimental("IStorage")]
+public static class ItemStorageContext {
+
+    public static IItemStorageContext GenericVoidOverflow(IStorage<CollectibleResource> storage, int slot) {
+        return new SimpleItemStorageContext(storage, slot);
+    }
+    
 }

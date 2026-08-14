@@ -3,9 +3,13 @@ using Vintagestory.GameContent;
 
 namespace CommonApis.Temperature.Impl;
 
-public class FirepitTemperatureProvider(BlockEntityFirepit blockEntity) : ITemperatureProvider {
+public class FirepitTemperatureProvider(BlockEntityFirepit blockEntity) : MutableTemperatureProviderBase {
 
-    public float GetTemperature() {
+    public override float GetTemperature() {
         return blockEntity.furnaceTemperature;
+    }
+
+    protected override void SetTemperatureInternal(float temp) {
+        blockEntity.furnaceTemperature = temp;
     }
 }

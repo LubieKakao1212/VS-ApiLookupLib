@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using CommonApis.ApiLookup.API;
 using CommonApis.ApiLookup.Helper;
+using CommonApis.ApiLookup.Systems;
 using CommonApis.Temperature.Api;
 using CommonApis.Temperature.Helper;
 using CommonApis.Temperature.Impl;
@@ -15,7 +16,7 @@ namespace CommonApis.Temperature.Systems;
 public class TemperatureApiDefaults : ModSystem {
 
     private static readonly ConstantTemperatureProvider LitTorchProvider = new(600f);
-
+    
     public override double ExecuteOrder() {
         return 1.0;
     }
@@ -27,8 +28,8 @@ public class TemperatureApiDefaults : ModSystem {
     public void RegisterDefaults(ICoreAPI api) {
         var apiSys = api.ApiLookups().TemperatureProviders();
 
-        // var itemLookup = apiSys.ItemStack;
-        // itemLookup.RegisterFallback(ItemStackFallbackGetter);
+        var itemLookup = apiSys.ItemStack;
+        itemLookup.RegisterFallback(ItemStackFallbackGetter);
 
         var blockLookup = apiSys.Block;
         blockLookup.RegisterForBlocks(FirepitGetter, new AssetLocation("firepit-lit"));
@@ -58,9 +59,8 @@ public class TemperatureApiDefaults : ModSystem {
         return (world, pos, ctx) => provider;
     }
 
-
-    private static IMutableTemperatureProvider ItemStackFallbackGetter(IWorldAccessor world, ItemStack stack, IItemStorageContext ctx) {
-        return new ItemStackTemperatureProvider(world, ctx);
+    private static IMutableTemperatureProvider ItemStackFallbackGetter(IWorldAccessor world, ItemStack stack, ItemLookupContext<NoContext> ctx) {
+        return new ItemStackTemperatureProvider(world, ctx.Storage);
     }
 }
 #pragma warning restore IStorage
