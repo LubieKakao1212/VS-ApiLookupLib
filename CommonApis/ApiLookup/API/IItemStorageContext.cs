@@ -4,6 +4,7 @@ using CommonApis.Storage.Api;
 using CommonApis.Storage.Api.Resource;
 using CommonApis.Transact.Api;
 using Vintagestory.API.Common;
+using Vintagestory.GameContent;
 
 namespace CommonApis.ApiLookup.API;
 
@@ -47,7 +48,11 @@ public interface IItemStorageContext {
     void AcceptOverflow(ITransactionContext transaction, CollectibleResource resource, long amount);
 
     TValue? Find<TValue, TContext>(IItemStackApiLookup<TValue, TContext> lookup, IWorldAccessor world, TContext context) {
-        return lookup.Get(world, OtherSlots.GetContentInSlot(SlotInStorage).AsItemStack()!, new ItemLookupContext<TContext>() {
+        var stack = OwnerStorage.GetContentInSlot(SlotInStorage).AsItemStack();
+        if (stack == null) {
+            return default;
+        }
+        return lookup.Get(world, stack, new ItemLookupContext<TContext>() {
             Context = context,
             Storage = this
         });

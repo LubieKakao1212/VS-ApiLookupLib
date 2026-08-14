@@ -19,7 +19,7 @@ public class SlicedStorage<TResource> : IStorage<TResource> where TResource : IR
         }
         
         var bound = firstSlot + slotCount;
-        if (bound >= storage.SlotCount) {
+        if (bound > storage.SlotCount) {
             throw new IndexOutOfRangeException();
         }
         _storage = storage;

@@ -1,7 +1,6 @@
 ﻿using System;
 using CommonApis.ApiLookup.API;
 using CommonApis.ApiLookup.Helper;
-using CommonApis.ApiLookup.Impl.Item;
 using CommonApis.Storage.Helper;
 using CommonApis.Temperature.Api;
 using CommonApis.Temperature.Helper;
@@ -20,24 +19,32 @@ public class ForgeTemperatureProvider(BlockEntityForge blockEntity) : IMutableTe
     /// </summary>
     /// <returns></returns>
     public float GetTemperature() {
-        return InternalStackTemperature().GetTemperature();
+        return (InternalStackTemperature()?.GetTemperature()).GetValueOrDefault(ITemperatureProvider.AmbientTemperature);
     }
 
     public void SetTemperature(ITransactionContext transaction, float temp) {
-        InternalStackTemperature().SetTemperature(transaction, temp);
+        InternalStackTemperature()?.SetTemperature(transaction, temp);
     }
 
-    private IMutableTemperatureProvider InternalStackTemperature() {
+    private IMutableTemperatureProvider? InternalStackTemperature() {
         var api = blockEntity.Api;
         var world = api.World;
         var pos = blockEntity.Pos;
-        var lookups = api.ApiLookups(); 
+        var lookups = api.ApiLookups();
         var collectibleStorage = lookups.Storage().Collectible().BlockSided;
         var temperature = lookups.TemperatureProviders().ItemStack;
         var workPieceStorage = collectibleStorage.Get(world, pos, BlockFacing.UP) ?? throw new NullReferenceException();
         var ctx = ItemStorageContext.GenericVoidOverflow(workPieceStorage, 0);
-        var temp = ctx.Find(temperature, world, default) as IMutableTemperatureProvider ?? throw new NullReferenceException();
-        return temp;
+        var temp = ctx.Find(temperature, world, default); 
+        
+        if (temp == null) {
+            return null;
+        }
+        if (temp is IMutableTemperatureProvider mut) {
+            return mut;
+        }
+        api.Logger.Warning("Item with non-mutable temperature found on a forge");
+        return null;
     }
 }
 

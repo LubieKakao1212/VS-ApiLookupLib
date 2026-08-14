@@ -84,6 +84,7 @@ public static class StorageExtensions {
         
         var extracted = storage.Extract(nested, slot, long.MaxValue, resource => true);
         if (storage.Insert(nested, slot, newResource, extracted.amount) == extracted.amount) {
+            nested.Commit();
             return extracted.resource;
         }
         return default;
@@ -133,7 +134,7 @@ public static class Storages {
     /// TODO Missing Documentation
     /// </summary>
     public static IStorage<TResource> Sliced<TResource>(this IStorage<TResource> storage, int start) where TResource : IResource<TResource> {
-        return new SlicedStorage<TResource>(storage, start, storage.SlotCount - start);
+        return new SlicedStorage<TResource>(storage, start, storage.SlotCount - start + 1);
     }
     
     /// <summary>

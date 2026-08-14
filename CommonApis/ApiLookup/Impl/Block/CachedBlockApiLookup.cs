@@ -29,7 +29,7 @@ public class CachedBlockApiLookup<TValue, TContext>(ICoreAPI api) : SimpleBlockA
             }
         }
         
-        if (hasResult) {
+        if (!hasResult) {
             result = base.Get(world, source, context);
             
             var cache = _cache.GetValueOrDefault(source);
