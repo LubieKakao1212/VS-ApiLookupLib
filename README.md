@@ -1,81 +1,116 @@
-﻿# Api-Lookup Lib for Vintage Story
-FabricApi-like api-lookup library for Vintage Story.
+﻿# CommonApis (formerly ApiLookupLob)
+***
 
-## Why I decided to make this library?
-In general, I got frustrated at the lack of consistency in several parts of the games api. More precisely:
-- Temperature - Firepit, Forge, CoalPiles and ItemStacks have different ways of going about how it is stored and how it should change over time.
-Also `BlockEntityFirepit.changeTemperature` is not static even though it doesn't access any non-static field or functions
-- Inventories and Item/Fluid Storage - This is even more messy, because sometimes subclasses of `InventoryBase` are being used for item storage and sometimes it's `ItemStack[]`
+CommonApis is a collection of related semi-independent apis (or modules) for modders.  
 
-## What this does?
-This library allows to "look up" an api from a given item/block (soon also entities). Different lookups may have arbitrary "contexts" such as `BlockFacing` for directional access.
-## How to use?
-### Use Nullability checks!
+### List of current modules with dependencies:
+- [ApiLookup](#apilookup) -> no deps[*](#readme-star-one)
+- [Transact](#transact) -> no deps
+- [IStorage](#) -> ApiLookup**, Transact
+- [Temperature](#) -> ApiLookup, Transact, IStorage
+
+### General Advice:
 It is recommended to use this library with nullability checks enabled.
-To enable nullability checks add this tou project properties:
+To enable nullability checks add this to project properties:
 ```msbuild
 <Nullable>enable</Nullable>
 ```
-I will not answer any issues regarding `NullReferenceException` if you don't have these checks enabled.
+In new mod templates this is enabled by default.
 
-### Getting a value (Example using CommonApis)
+Every module in this mod has a separation of `Api` and `Implementation`, because of that you should never have to access anything outside of `*.Api` and sometimes `*.Helper` namespaces.
+
+The code is partially documented, however if you are unsure how to use something feel free to contact me on discord.
+
+***
+## Module Descriptions
+### ApiLookup
+In general this module works similarly to one from [FabricApi](https://github.com/FabricMC/fabric-api/tree/26.2/fabric-api-lookup-api-v1).  
+The main use cases are as follows:
+- Adding functionality to existing features, without reimplementing/replacing them (or allow people to do the same)
+- Easly expose different kinds of th esame interaction base on a specific context e.g. direction
+
+Examples:
 ```csharp
-//Get a lookupInstance
-IBlockApiLookup<ITemperatureProvider, NoContext> lookup = world.ApiLookups().TemperatureProviders().Block;
-//Get an api from the lookup
-var temp = lookup.Get(world, pos, default);
+TODO
 ```
-#### Note on ItemStackApiLookups:  
-Contrary to what the name suggests, they do not take ItemStacks directly, but a wrapper called `IItemAccess`. 
-Currently `IItemAccess` can be created using an ItemStack directly or by using a `Slot` from an `Inventory`.
-This allows a given api to directly interact with the Inventory it is attached to.
 
-### Registering new value getters
-Registering getters must be done not sooner than in AssetsFinalize();
-- #### Generic Options:
-```csharp 
-IApiLookupBase<TApi, TContext, TSource> lookup;
-lookup.RegisterFallback(); // Used to register getter for all objects, fallbacks are searched last
-```
-- #### For Blocks:
+<a name="readme-star-one">*To use ItemStackApiLookup using IStorage is required</a>
+
+
+### Transact
+This module provides `Transactions` to replace methods like `TryExtract()` or `SimulateInsert()`.
+All of the above operations have similar issues:
+- They get messy really quickly as operation complexity increses
+- They rely on an assumption that either the **result is always correct** or that the **state does not change between a check and an action**.
+    However these can't always be easly enforced so you have to work you way around them.
+
+Transactions solve this issue by making it trivial to `rollback` an unwanted state.
+
+Examples:
 ```csharp
-//Block and ItemStack lookups have more registrations options
-IBlockApiLookup<TApi, TContext> blockLookup; //For blocks
-blockLookup.RegisterForBlocks(Getter, AssetLocation); //By locations/ids, you can use wildcards
-blockLookup.RegisterForBlocks(Getter, params Block[]); //For specific blocks
-blockLookup.RegisterForBlocks(BlockEntityGetter, /* Any from above */); //With provided BlockEntity
+//Assume we have an object which has a "fluid" which can be drained
+IFluidSource fluidSource = ...;
+//Keyword `using` is important so that the transaction closes correctly
+using var transaction = Transaction.OpenRoot();
 
-//You can also register by Behaviors (Both Collectible and BlockEntity), BlockEntity classCodes, BlockEntity Types
-//All options Requesting Type
+//We want to drain between 70 and 100 units of fluid
+var fluidDrained = fluidSource.DrainFluid(transactio, 100);
+if(fluidDrained < 70) {
+    //We did not managed to drain enough.
+    //Maybe there wasn't enough, maybe it is impossible to drain more thatn 50 at onece, we don't care.
+    //Since we use `using` transaction is disposed automatically revirting the unwanted state
+    return;
+}
+//We drained enough so commit the transaction
+transaction.Commit();
+//Since the transaction was commited the state is not reverted
+return;
 ```
-- #### For Items
+
 ```csharp
-IItemStackApiLookup<TValue, TContext> itemLookup; //For items
-itemLookup.RegisterFor(Getter, /* AssetLocation or params Block[] */); //Similar to BlockApiLookups
-itemLookup.RegisterForBehaviors(Getter, bool, params Type[]) // Registers for all collectibles with any Behavior of/deriving from given types
-itemLookup.RegisterForTypes(Getter, bool, params Type[]) // Registers for all collectibles of/deriving from given types
+//Similar case as before, but we also have a fluid sink
+IFluidSource fluidSource = ...;
+IFluidSink fluidSink = ...;
+
+using var transaction = Transaction.OpenRoot();
+//Again we attempt to drain 100 units
+var fluidDrained = fluidSource.DrainFluid(transactio, 100);
+if(fluidDrained < 70) {
+    //Same as before
+    return;
+}
+
+//Differnt syntax for using, similar behavior
+using(var nestedTransaction = transaction.OpenNested()) {
+    var inserted = fluidSink.InsertFluid(nestedTransaction, fluidDrained);
+    if(inserted > 20) {
+        //Commit only if we extracted at least 20
+        nestedTransaction.Commit()
+    }
+    //If we did not manage to insert at least 20, the insertion gets rolled back
+    //Since this was done using a nested transaction, draining is unaffected
+}
+
+//Some random check
+if(!prayToRandomGods)
+{
+    //We failed to please the gods
+    //Both drain and insert operations get rolled back
+    return;
+}
+//We did everything fine, transaction gets commmited
+//Draining result stayes
+//Insert result stays if inserted at least 20 units
+transaction.Commit();
+return;
 ```
 
-### Creating Custom APIs
-An api should be an interface.  
-If the given api is mutable i.e. allows for persistent changes it should also implement `IDisposable`, all changes sould be applied in `IDisposable.Dispose()`.
+### IStorage
+This module is experimental  
+TODO
 
-### Creating Custom Lookups
-```csharp
-//For ItemStacks
-IItemStackApiLookup<TApi, TContext> Items = new SimpleItemStackApiLookup<TApi, TContext>();
-//For Blocks
-IBlockApiLookup<TApi, TContext> Blocks = new SimpleBlockApiLookup<TApi, TContext>();
-```
-#### Adding easy access to your lookups:
-There is an extension method attached to `IWorldAccessor`, `ICoreAPI` and `IModLoader` which returns `ApiLookupRegistry`.
+### Temperature
+TODO
 
-You encouraged to add extension methods to `ApiLookupRegistry` which return a class with access to your lookups, group these extensions by feature and not by mod.
-See example in CommonApis.
-
-### Example context usage
-- `NoContext`: There is no context, always pass default
-- `BlockFacing`: This lookup is sided i.e. can be queried for different sides, different sides may return different results
-- `BlockFacing?`: Same as above but also accepts `null` as "Internal"
-
-Contexts are not limited to these values, you can use any type if you need to
+***
+[OLD README](READMEOLD.md)
