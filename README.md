@@ -6,8 +6,8 @@ CommonApis is a collection of related semi-independent apis (or modules) for mod
 ### List of current modules with dependencies:
 - [ApiLookup](#apilookup) -> no deps[*](#readme-star-one)
 - [Transact](#transact) -> no deps
-- [IStorage](#) -> ApiLookup**, Transact
-- [Temperature](#) -> ApiLookup, Transact, IStorage
+- [IStorage](#istorage) -> ApiLookup**, Transact
+- [Temperature](#temperature) -> ApiLookup, Transact, IStorage
 
 ### General Advice:
 It is recommended to use this library with nullability checks enabled.
@@ -29,13 +29,14 @@ The main use cases are as follows:
 - Adding functionality to existing features, without reimplementing/replacing them (or allow people to do the same)
 - Easly expose different kinds of th esame interaction base on a specific context e.g. direction
 
+Do NOT keep/cache apis/objects obtained through a lookup, there is no invalidation callback, this is by design.
+
 Examples:
 ```csharp
 TODO
 ```
 
-<a name="readme-star-one">*To use ItemStackApiLookup using IStorage is required</a>
-
+<a name="readme-star-one">*To use ItemStackApiLookup using **IStorage** is required</a>
 
 ### Transact
 This module provides `Transactions` to replace methods like `TryExtract()` or `SimulateInsert()`.
@@ -104,13 +105,36 @@ if(!prayToRandomGods)
 transaction.Commit();
 return;
 ```
+Remember to always close you transaction in the same scope it was opend in. If you use the `using` keyword this is done automatically at corrrect time.
+Don't keep transactions around, there can be only one transaction per depth at a given time.
 
 ### IStorage
-This module is experimental  
-TODO
+**Warning: This module is considered experimental, it has not been fully tested.**  
+
+This module is built on top of **Transact** and provides a transaction-awere alternative to vanilla Inventory represented by `IStorage<CollectibleResource>`.
+
+#### However there are some notible differences between vanilla `IInventory` and `IStorage<T>`:  
+-  While IInventory uses `ItemStacks` which store `Collectible`, `StackSize` and `Attributes`;
+- `IStorage<T>` uses a more general `IResource` paired with a `long`, which could be bundled together into a `ResourceStack<T : IResource>`. 
+In case of an `IStorage<T>` for "Item" (game calls it CollectibleObject), there is an implementation of called `CollectibleResource`, its basicely an ItemStack without a StackSize
+
+Any existing `IInventory` can be wrapped into an `IStorage<CollectibleResource>` purpose of using transactions.
+
+#### However, due to how IInventory based storages are implemented you have to be carefull, and know that the `IStorage` while in use, takes complete controll over the inventory, meaning it can (and will, during rollbacks) overrite any existing changes done to the inventory via its standard interface.
+#### Due to the "hackish" nature of current implementation there can be lack of parity with vanilla interface. I attempted to mitigate that but there is no guarantee.
+
+You can easly implement new "storable" things (like Liquids, coming SOON™) by implementing the `IResource` interface and usign it as the generic parameter in `IStorage<T>`.
+As of now there is currently no "pure" on generic implementation of base IStorage, however it is planned.
 
 ### Temperature
-TODO
+Two interfaces for managing temperature of blocks/items.
+Mutable variant has a transaction-awere setter.
+Thre is an `ApiLookup` for both items and blocks, by default these are implemented:
+- Firepit
+- Forge
+- Coal Pile (Any coal)
+- Torches (This will be removed in the future)
+- Any item
 
 ***
 [OLD README](READMEOLD.md)
