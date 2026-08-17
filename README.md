@@ -123,6 +123,13 @@ Any existing `IInventory` can be wrapped into an `IStorage<CollectibleResource>`
 #### However, due to how IInventory based storages are implemented you have to be carefull, and know that the `IStorage` while in use, takes complete controll over the inventory, meaning it can (and will, during rollbacks) overrite any existing changes done to the inventory via its standard interface.
 #### Due to the "hackish" nature of current implementation there can be lack of parity with vanilla interface. I attempted to mitigate that but there is no guarantee.
 
+To acquire an instance of `IStorage<CollectibleResource>` you can use provided `ApiLookups`:
+- BlockSided:
+  - Any block with either "GenericContainer" or "GenericTypedContainer" set as blockEntity
+  - Forge
+  - More will come SOON™ or as needed
+As a general rule, unless otherwise stated, UP should be exposing inputs, DOWN should be exposing outputs, horizontal directions should be exposing auxilary/utility such as fuel in case of a forge
+
 You can easly implement new "storable" things (like Liquids, coming SOON™) by implementing the `IResource` interface and usign it as the generic parameter in `IStorage<T>`.
 As of now there is currently no "pure" on generic implementation of base IStorage, however it is planned.
 
@@ -135,6 +142,7 @@ Thre is an `ApiLookup` for both items and blocks, by default these are implement
 - Coal Pile (Any coal)
 - Torches (This will be removed in the future)
 - Any item
+- More will come SOON™ or as needed
 
 ***
 [OLD README](READMEOLD.md)
