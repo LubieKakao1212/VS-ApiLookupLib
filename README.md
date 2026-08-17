@@ -144,5 +144,9 @@ Thre is an `ApiLookup` for both items and blocks, by default these are implement
 - Any item
 - More will come SOON™ or as needed
 
+## Contributions / Help
+- If you want to contribute feel free to make a PR  
+- If you found a bug write an issue  
+- If you are usure how to use any part of this library feel free to open an issue or contact me on discord
 ***
 [OLD README](READMEOLD.md)
